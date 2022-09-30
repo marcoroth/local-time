@@ -6,7 +6,7 @@ Local Time makes it easy to display times and dates to users in their local time
 
 ## Installation
 
-1. Add `gem 'local_time'` to your Gemfile.
+1. Add `gem 'local_time', github: 'marcoroth/local-time'` to your Gemfile.
 2. Import `LocalTime` from [`@marcoroth/local-time`](https://www.npmjs.com/package/@marcoroth/local-time) in your application's JavaScript bundle.
 
 ```js
