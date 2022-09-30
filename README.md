@@ -1,21 +1,19 @@
-# Local Time
+# Modern Local Time
+
+> This is a modern fork of Basecamp's `local-time` npm package and gem. The original repo can be found here: https://github.com/basecamp/local_time
 
 Local Time makes it easy to display times and dates to users in their local time. Its Rails helpers render `<time>` elements in UTC (making them cache friendly), and its JavaScript component immediately converts those elements from UTC to the browser's local time.
 
 ## Installation
 
 1. Add `gem 'local_time'` to your Gemfile.
-2. Include `local-time.js` in your application's JavaScript bundle.
+2. Import `LocalTime` from [`@marcoroth/local-time`](https://www.npmjs.com/package/@marcoroth/local-time) in your application's JavaScript bundle.
 
-    Using the asset pipeline:
-    ```js
-    //= require local-time
-    ```
-    Using the [local-time npm package](https://www.npmjs.com/package/local-time):
-    ```js
-    import LocalTime from "local-time"
-    LocalTime.start()
-    ```
+```js
+import LocalTime from "@marcoroth/local-time"
+
+LocalTime.start()
+```
 
 ## Example
 
@@ -140,8 +138,6 @@ LocalTime.config.i18n["es"] = {
 LocalTime.config.locale = "es"
 ```
 
----
+## License
 
-[![Build Status](https://travis-ci.org/basecamp/local_time.svg?branch=master)](https://travis-ci.org/basecamp/local_time)
-
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/basecamp_local_time.svg)](https://saucelabs.com/u/basecamp_local_time)
+Copyright © 2022 Marco Roth, Copyright © 2013-2018 Javan Makhmali, Basecamp. It is free software, and may be redistributed under the terms specified in the MIT-LICENSE file.

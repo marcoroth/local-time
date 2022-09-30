@@ -1,1 +1,615 @@
-(function(){var t=this;(function(){(function(){var t=[].slice;this.LocalTime={config:{},run:function(){return this.getController().processElements()},process:function(){var e,n,r,a;for(n=1<=arguments.length?t.call(arguments,0):[],r=0,a=n.length;r<a;r++)e=n[r],this.getController().processElement(e);return n.length},getController:function(){return null!=this.controller?this.controller:this.controller=new e.Controller}}}).call(this)}).call(t);var e=t.LocalTime;(function(){(function(){e.config.i18n={en:{date:{dayNames:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],abbrDayNames:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],monthNames:["January","February","March","April","May","June","July","August","September","October","November","December"],abbrMonthNames:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],yesterday:"yesterday",today:"today",tomorrow:"tomorrow",on:"on {date}",formats:{"default":"%b %e, %Y",thisYear:"%b %e"}},time:{am:"am",pm:"pm",singular:"a {time}",singularAn:"an {time}",elapsed:"{time} ago",second:"second",seconds:"seconds",minute:"minute",minutes:"minutes",hour:"hour",hours:"hours",formats:{"default":"%l:%M%P"}},datetime:{at:"{date} at {time}",formats:{"default":"%B %e, %Y at %l:%M%P %Z"}}}}}).call(this),function(){e.config.locale="en",e.config.defaultLocale="en"}.call(this),function(){e.config.timerInterval=6e4}.call(this),function(){var t,n,r;r=!isNaN(Date.parse("2011-01-01T12:00:00-05:00")),e.parseDate=function(t){return t=t.toString(),r||(t=n(t)),new Date(Date.parse(t))},t=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|[-+]?[\d:]+)$/,n=function(e){var n,r,a,i,o,s,u,c,l;if(a=e.match(t))return a[0],c=a[1],o=a[2],n=a[3],r=a[4],i=a[5],u=a[6],l=a[7],"Z"!==l&&(s=l.replace(":","")),c+"/"+o+"/"+n+" "+r+":"+i+":"+u+" GMT"+[s]}}.call(this),function(){e.elementMatchesSelector=function(){var t,e,n,r,a,i;return t=document.documentElement,e=null!=(n=null!=(r=null!=(a=null!=(i=t.matches)?i:t.matchesSelector)?a:t.webkitMatchesSelector)?r:t.mozMatchesSelector)?n:t.msMatchesSelector,function(t,n){if((null!=t?t.nodeType:void 0)===Node.ELEMENT_NODE)return e.call(t,n)}}()}.call(this),function(){var t,n,r;t=e.config,r=t.i18n,e.getI18nValue=function(a,i){var o,s;return null==a&&(a=""),o=(null!=i?i:{locale:t.locale}).locale,s=n(r[o],a),null!=s?s:o!==t.defaultLocale?e.getI18nValue(a,{locale:t.defaultLocale}):void 0},e.translate=function(t,n,r){var a,i,o;null==n&&(n={}),o=e.getI18nValue(t,r);for(a in n)i=n[a],o=o.replace("{"+a+"}",i);return o},n=function(t,e){var n,r,a,i,o;for(o=t,i=e.split("."),n=0,a=i.length;n<a;n++){if(r=i[n],null==o[r])return null;o=o[r]}return o}}.call(this),function(){var t,n,r,a,i;t=e.getI18nValue,i=e.translate,e.strftime=a=function(e,o){var s,u,c,l,d,h,f;return u=e.getDay(),s=e.getDate(),d=e.getMonth(),f=e.getFullYear(),c=e.getHours(),l=e.getMinutes(),h=e.getSeconds(),o.replace(/%(-?)([%aAbBcdeHIlmMpPSwyYZ])/g,function(o,m,p){switch(p){case"%":return"%";case"a":return t("date.abbrDayNames")[u];case"A":return t("date.dayNames")[u];case"b":return t("date.abbrMonthNames")[d];case"B":return t("date.monthNames")[d];case"c":return e.toString();case"d":return n(s,m);case"e":return s;case"H":return n(c,m);case"I":return n(a(e,"%l"),m);case"l":return 0===c||12===c?12:(c+12)%12;case"m":return n(d+1,m);case"M":return n(l,m);case"p":return i("time."+(c>11?"pm":"am")).toUpperCase();case"P":return i("time."+(c>11?"pm":"am"));case"S":return n(h,m);case"w":return u;case"y":return n(f%100,m);case"Y":return f;case"Z":return r(e)}})},n=function(t,e){switch(e){case"-":return t;default:return("0"+t).slice(-2)}},r=function(t){var e,n,r,a,i;return i=t.toString(),(e=null!=(n=i.match(/\(([\w\s]+)\)$/))?n[1]:void 0)?/\s/.test(e)?e.match(/\b(\w)/g).join(""):e:(e=null!=(r=i.match(/(\w{3,4})\s\d{4}$/))?r[1]:void 0)?e:(e=null!=(a=i.match(/(UTC[\+\-]\d+)/))?a[1]:void 0)?e:""}}.call(this),function(){e.CalendarDate=function(){function t(t,e,n){this.date=new Date(Date.UTC(t,e-1)),this.date.setUTCDate(n),this.year=this.date.getUTCFullYear(),this.month=this.date.getUTCMonth()+1,this.day=this.date.getUTCDate(),this.value=this.date.getTime()}return t.fromDate=function(t){return new this(t.getFullYear(),t.getMonth()+1,t.getDate())},t.today=function(){return this.fromDate(new Date)},t.prototype.equals=function(t){return(null!=t?t.value:void 0)===this.value},t.prototype.is=function(t){return this.equals(t)},t.prototype.isToday=function(){return this.is(this.constructor.today())},t.prototype.occursOnSameYearAs=function(t){return this.year===(null!=t?t.year:void 0)},t.prototype.occursThisYear=function(){return this.occursOnSameYearAs(this.constructor.today())},t.prototype.daysSince=function(t){if(t)return(this.date-t.date)/864e5},t.prototype.daysPassed=function(){return this.constructor.today().daysSince(this)},t}()}.call(this),function(){var t,n,r;n=e.strftime,r=e.translate,t=e.getI18nValue,e.RelativeTime=function(){function a(t){this.date=t,this.calendarDate=e.CalendarDate.fromDate(this.date)}return a.prototype.toString=function(){var t,e;return(e=this.toTimeElapsedString())?r("time.elapsed",{time:e}):(t=this.toWeekdayString())?(e=this.toTimeString(),r("datetime.at",{date:t,time:e})):r("date.on",{date:this.toDateString()})},a.prototype.toTimeOrDateString=function(){return this.calendarDate.isToday()?this.toTimeString():this.toDateString()},a.prototype.toTimeElapsedString=function(){var t,e,n,a,i;return n=(new Date).getTime()-this.date.getTime(),a=Math.round(n/1e3),e=Math.round(a/60),t=Math.round(e/60),n<0?null:a<10?(i=r("time.second"),r("time.singular",{time:i})):a<45?a+" "+r("time.seconds"):a<90?(i=r("time.minute"),r("time.singular",{time:i})):e<45?e+" "+r("time.minutes"):e<90?(i=r("time.hour"),r("time.singularAn",{time:i})):t<24?t+" "+r("time.hours"):""},a.prototype.toWeekdayString=function(){switch(this.calendarDate.daysPassed()){case 0:return r("date.today");case 1:return r("date.yesterday");case-1:return r("date.tomorrow");case 2:case 3:case 4:case 5:case 6:return n(this.date,"%A");default:return""}},a.prototype.toDateString=function(){var e;return e=t(this.calendarDate.occursThisYear()?"date.formats.thisYear":"date.formats.default"),n(this.date,e)},a.prototype.toTimeString=function(){return n(this.date,t("time.formats.default"))},a}()}.call(this),function(){var t,n=function(t,e){return function(){return t.apply(e,arguments)}};t=e.elementMatchesSelector,e.PageObserver=function(){function e(t,e){this.selector=t,this.callback=e,this.processInsertion=n(this.processInsertion,this),this.processMutations=n(this.processMutations,this)}return e.prototype.start=function(){if(!this.started)return this.observeWithMutationObserver()||this.observeWithMutationEvent(),this.started=!0},e.prototype.observeWithMutationObserver=function(){var t;if("undefined"!=typeof MutationObserver&&null!==MutationObserver)return t=new MutationObserver(this.processMutations),t.observe(document.documentElement,{childList:!0,subtree:!0}),!0},e.prototype.observeWithMutationEvent=function(){return addEventListener("DOMNodeInserted",this.processInsertion,!1),!0},e.prototype.findSignificantElements=function(e){var n;return n=[],(null!=e?e.nodeType:void 0)===Node.ELEMENT_NODE&&(t(e,this.selector)&&n.push(e),n.push.apply(n,e.querySelectorAll(this.selector))),n},e.prototype.processMutations=function(t){var e,n,r,a,i,o,s,u;for(e=[],n=0,a=t.length;n<a;n++)switch(o=t[n],o.type){case"childList":for(u=o.addedNodes,r=0,i=u.length;r<i;r++)s=u[r],e.push.apply(e,this.findSignificantElements(s))}return this.notify(e)},e.prototype.processInsertion=function(t){var e;return e=this.findSignificantElements(t.target),this.notify(e)},e.prototype.notify=function(t){if(null!=t?t.length:void 0)return"function"==typeof this.callback?this.callback(t):void 0},e}()}.call(this),function(){var t,n,r,a,i=function(t,e){return function(){return t.apply(e,arguments)}};r=e.parseDate,a=e.strftime,n=e.getI18nValue,t=e.config,e.Controller=function(){function o(){this.processElements=i(this.processElements,this),this.pageObserver=new e.PageObserver(s,this.processElements)}var s,u,c;return s="time[data-local]:not([data-localized])",o.prototype.start=function(){if(!this.started)return this.processElements(),this.startTimer(),this.pageObserver.start(),this.started=!0},o.prototype.startTimer=function(){var e;if(e=t.timerInterval)return null!=this.timer?this.timer:this.timer=setInterval(this.processElements,e)},o.prototype.processElements=function(t){var e,n,r;for(null==t&&(t=document.querySelectorAll(s)),n=0,r=t.length;n<r;n++)e=t[n],this.processElement(e);return t.length},o.prototype.processElement=function(t){var e,i,o,s,l,d;if(i=t.getAttribute("datetime"),o=t.getAttribute("data-format"),s=t.getAttribute("data-local"),l=r(i),!isNaN(l))return t.hasAttribute("title")||(d=a(l,n("datetime.formats.default")),t.setAttribute("title",d)),t.textContent=e=function(){switch(s){case"time":return u(t),a(l,o);case"date":return u(t),c(l).toDateString();case"time-ago":return c(l).toString();case"time-or-date":return c(l).toTimeOrDateString();case"weekday":return c(l).toWeekdayString();case"weekday-or-date":return c(l).toWeekdayString()||c(l).toDateString()}}(),t.hasAttribute("aria-label")?void 0:t.setAttribute("aria-label",e)},u=function(t){return t.setAttribute("data-localized","")},c=function(t){return new e.RelativeTime(t)},o}()}.call(this),function(){var t,n,r,a;a=!1,t=function(){return document.attachEvent?"complete"===document.readyState:"loading"!==document.readyState},n=function(t){var e;return null!=(e="function"==typeof requestAnimationFrame?requestAnimationFrame(t):void 0)?e:setTimeout(t,17)},r=function(){var t;return t=e.getController(),t.start()},e.start=function(){if(!a)return a=!0,"undefined"!=typeof MutationObserver&&null!==MutationObserver||t()?r():n(r)},window.LocalTime===e&&e.start()}.call(this)}).call(this),"object"==typeof module&&module.exports?module.exports=e:"function"==typeof define&&define.amd&&define(e)}).call(this);
+/* LocalTime 3.0.0-beta.1 */
+
+let i18n$1 = {
+  en: {
+    date: {
+      dayNames: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      abbrDayNames: [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      monthNames: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      abbrMonthNames: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      yesterday: "yesterday",
+      today: "today",
+      tomorrow: "tomorrow",
+      on: "on {date}",
+      formats: {
+        default: "%b %e, %Y",
+        thisYear: "%b %e"
+      }
+    },
+    time: {
+      am: "am",
+      pm: "pm",
+      singular: "a {time}",
+      singularAn: "an {time}",
+      elapsed: "{time} ago",
+      second: "second",
+      seconds: "seconds",
+      minute: "minute",
+      minutes: "minutes",
+      hour: "hour",
+      hours: "hours",
+      formats: {
+        default: "%l:%M%P"
+      }
+    },
+    datetime: {
+      at: "{date} at {time}",
+      formats: {
+        default: "%B %e, %Y at %l:%M%P %Z"
+      }
+    }
+  }
+};
+
+let _i18n = i18n$1;
+let _locale = "en";
+let _defaultLocale = "en";
+let _timerInterval = 60 * 1000;
+
+var config = {
+  get locale() {
+    return _locale
+  },
+  set locale (value) {
+    _locale = value;
+  },
+  get defaultLocale() {
+    return _defaultLocale
+  },
+  set defaultLocale(value) {
+    _defaultLocale = value;
+  },
+  get i18n() {
+    return _i18n
+  },
+  set i18n(value) {
+    _i18n = value;
+  },
+  get timerInterval() {
+    return _timerInterval
+  },
+  set timerInterval(value) {
+    _timerInterval = value;
+  }
+};
+
+// Older browsers do not support ISO8601 (JSON) timestamps in Date.parse
+const supportsISO8601 = !isNaN(Date.parse("2011-01-01T12:00:00-05:00"));
+const iso8601Pattern = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|[-+]?[\d:]+)$/;
+
+function parseDate(dateString) {
+  dateString = dateString.toString();
+  if (!supportsISO8601) dateString = reformatDateString(dateString);
+
+  return new Date(Date.parse(dateString))
+}
+
+function reformatDateString(dateString) {
+  let matches;
+
+  if (matches = dateString.match(iso8601Pattern)) {
+    let offset;
+    const [_, year, month, day, hour, minute, second, zone] = Array.from(matches);
+    if (zone !== "Z") { offset = zone.replace(":", ""); }
+    return `${year}/${month}/${day} ${hour}:${minute}:${second} GMT${[offset]}`
+  }
+}
+
+function elementMatchesSelector() {
+  let left, left1, left2;
+  const element = document.documentElement;
+  const method = (left = (left1 = (left2 = element.matches != null ? element.matches : element.matchesSelector) != null ? left2 : element.webkitMatchesSelector) != null ? left1 : element.mozMatchesSelector) != null ? left : element.msMatchesSelector;
+
+  return function(element, selector) {
+    if ((element != null ? element.nodeType : undefined) === Node.ELEMENT_NODE) {
+      return method.call(element, selector)
+    }
+  }
+}
+
+const { i18n } = config;
+
+function getI18nValue(keyPath, param) {
+  if (keyPath == null) { keyPath = ""; }
+  if (param == null) { param = { locale: config.locale }; }
+
+  const { locale } = param;
+  const value = getValue(i18n[locale], keyPath);
+
+  if (value != null) {
+    return value
+  } else if (locale !== config.defaultLocale) {
+    return getI18nValue(keyPath, {locale: config.defaultLocale})
+  }
+}
+
+function translate(keyPath, interpolations, options) {
+  if (interpolations == null) { interpolations = {}; }
+  let string = getI18nValue(keyPath, options);
+
+  for (let key in interpolations) {
+    const replacement = interpolations[key];
+    string = string.replace(`{${key}}`, replacement);
+  }
+
+  return string
+}
+
+function getValue(object, keyPath) {
+  let value = object;
+
+  for (let key of Array.from(keyPath.split("."))) {
+    if (value[key] != null) {
+      value = value[key];
+    } else {
+      return null
+    }
+  }
+
+  return value
+}
+
+function strftime(time, formatString) {
+  const day    = time.getDay();
+  const date   = time.getDate();
+  const month  = time.getMonth();
+  const year   = time.getFullYear();
+  const hour   = time.getHours();
+  const minute = time.getMinutes();
+  const second = time.getSeconds();
+
+  return formatString.replace(/%(-?)([%aAbBcdeHIlmMpPSwyYZ])/g, function(match, flag, modifier) {
+    switch (modifier) {
+      case "%": return "%"
+      case "a": return getI18nValue("date.abbrDayNames")[day]
+      case "A": return getI18nValue("date.dayNames")[day]
+      case "b": return getI18nValue("date.abbrMonthNames")[month]
+      case "B": return getI18nValue("date.monthNames")[month]
+      case "c": return time.toString()
+      case "d": return pad(date, flag)
+      case "e": return date
+      case "H": return pad(hour, flag)
+      case "I": return pad(strftime(time, "%l"), flag)
+      case "l": if ((hour === 0) || (hour === 12)) { return 12 } else { return (hour + 12) % 12 }
+      case "m": return pad(month + 1, flag)
+      case "M": return pad(minute, flag)
+      case "p": return translate(`time.${(hour > 11 ? "pm" : "am")}`).toUpperCase()
+      case "P": return translate(`time.${(hour > 11 ? "pm" : "am")}`)
+      case "S": return pad(second, flag)
+      case "w": return day
+      case "y": return pad(year % 100, flag)
+      case "Y": return year
+      case "Z": return parseTimeZone(time)
+    }
+  })
+}
+
+function pad(num, flag) {
+  switch (flag) {
+    case "-": return num
+    default: return (`0${num}`).slice(-2)
+  }
+}
+
+function parseTimeZone(time) {
+  let name;
+  const string = time.toString();
+  // Sun Aug 30 2015 10:22:57 GMT-0400 (NAME)
+  if ((name = __guard__(string.match(/\(([\w\s]+)\)$/), x => x[1]))) {
+    if (/\s/.test(name)) {
+      // Sun Aug 30 2015 10:22:57 GMT-0400 (Eastern Daylight Time)
+      return name.match(/\b(\w)/g).join("")
+    } else {
+      // Sun Aug 30 2015 10:22:57 GMT-0400 (EDT)
+      return name
+    }
+  // Sun Aug 30 10:22:57 EDT 2015
+  } else if ((name = __guard__(string.match(/(\w{3,4})\s\d{4}$/), x1 => x1[1]))) {
+    return name
+  // "Sun Aug 30 10:22:57 UTC-0400 2015"
+  } else if ((name = __guard__(string.match(/(UTC[\+\-]\d+)/), x2 => x2[1]))) {
+    return name
+  } else {
+    return ""
+  }
+}
+
+function __guard__(value, transform) {
+  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined
+}
+
+var helpers = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  supportsISO8601: supportsISO8601,
+  parseDate: parseDate,
+  iso8601Pattern: iso8601Pattern,
+  reformatDateString: reformatDateString,
+  elementMatchesSelector: elementMatchesSelector,
+  getI18nValue: getI18nValue,
+  translate: translate,
+  getValue: getValue,
+  strftime: strftime,
+  pad: pad,
+  parseTimeZone: parseTimeZone,
+  __guard__: __guard__
+});
+
+class CalendarDate {
+  static fromDate(date) {
+    return new (this)(date.getFullYear(), date.getMonth() + 1, date.getDate())
+  }
+
+  static today() {
+    return this.fromDate(new Date)
+  }
+
+  constructor(year, month, day) {
+    this.date = new Date(Date.UTC(year, month - 1));
+    this.date.setUTCDate(day);
+
+    this.year = this.date.getUTCFullYear();
+    this.month = this.date.getUTCMonth() + 1;
+    this.day = this.date.getUTCDate();
+    this.value = this.date.getTime();
+  }
+
+  equals(calendarDate) {
+    return (calendarDate != null ? calendarDate.value : undefined) === this.value
+  }
+
+  is(calendarDate) {
+    return this.equals(calendarDate)
+  }
+
+  isToday() {
+    return this.is(this.constructor.today())
+  }
+
+  occursOnSameYearAs(date) {
+    return this.year === (date != null ? date.year : undefined)
+  }
+
+  occursThisYear() {
+    return this.occursOnSameYearAs(this.constructor.today())
+  }
+
+  daysSince(date) {
+    if (date) {
+      return (this.date - date.date) / (1000 * 60 * 60 * 24)
+    }
+  }
+
+  daysPassed() {
+    return this.constructor.today().daysSince(this)
+  }
+}
+
+class RelativeTime {
+  constructor(date) {
+    this.date = date;
+    this.calendarDate = CalendarDate.fromDate(this.date);
+  }
+
+  toString() {
+    let date, time;
+
+    if (time = this.toTimeElapsedString()) {
+      return translate("time.elapsed", {time})
+    } else if (date = this.toWeekdayString()) {
+      time = this.toTimeString();
+      return translate("datetime.at", {date, time})
+    } else {
+      return translate("date.on", {date: this.toDateString()})
+    }
+  }
+
+  toTimeOrDateString() {
+    if (this.calendarDate.isToday()) {
+      return this.toTimeString()
+    } else {
+      return this.toDateString()
+    }
+  }
+
+  toTimeElapsedString() {
+    let time;
+    const ms = new Date().getTime() - this.date.getTime();
+    const seconds = Math.round(ms / 1000);
+    const minutes = Math.round(seconds / 60);
+    const hours = Math.round(minutes / 60);
+
+    if (ms < 0) {
+      return null
+    } else if (seconds < 10) {
+      time = translate("time.second");
+      return translate("time.singular", {time})
+    } else if (seconds < 45) {
+      return `${seconds} ${translate("time.seconds")}`
+    } else if (seconds < 90) {
+      time = translate("time.minute");
+      return translate("time.singular", {time})
+    } else if (minutes < 45) {
+      return `${minutes} ${translate("time.minutes")}`
+    } else if (minutes < 90) {
+      time = translate("time.hour");
+      return translate("time.singularAn", {time})
+    } else if (hours < 24) {
+      return `${hours} ${translate("time.hours")}`
+    } else {
+      return ""
+    }
+  }
+
+  toWeekdayString() {
+    switch (this.calendarDate.daysPassed()) {
+      case 0:
+        return translate("date.today")
+      case 1:
+        return translate("date.yesterday")
+      case -1:
+        return translate("date.tomorrow")
+      case 2:case 3:case 4:case 5:case 6:
+        return strftime(this.date, "%A")
+      default:
+        return ""
+    }
+  }
+
+  toDateString() {
+    const format = this.calendarDate.occursThisYear() ? getI18nValue("date.formats.thisYear") : getI18nValue("date.formats.default");
+
+    return strftime(this.date, format)
+  }
+
+  toTimeString() {
+    return strftime(this.date, getI18nValue("time.formats.default"))
+  }
+}
+
+class PageObserver {
+  constructor(selector, callback) {
+    this.processMutations = this.processMutations.bind(this);
+    this.processInsertion = this.processInsertion.bind(this);
+    this.selector = selector;
+    this.callback = callback;
+  }
+
+  start() {
+    if (!this.started) {
+      this.observeWithMutationObserver() || this.observeWithMutationEvent();
+      return this.started = true
+    }
+  }
+
+  observeWithMutationObserver() {
+    if (typeof MutationObserver !== 'undefined' && MutationObserver !== null) {
+      const observer = new MutationObserver(this.processMutations);
+      observer.observe(document.documentElement, {childList: true, subtree: true});
+      return true
+    }
+  }
+
+  observeWithMutationEvent() {
+    addEventListener("DOMNodeInserted", this.processInsertion, false);
+    return true
+  }
+
+  findSignificantElements(element) {
+    const elements = [];
+    if ((element != null ? element.nodeType : undefined) === Node.ELEMENT_NODE) {
+      if (elementMatchesSelector(element, this.selector)) { elements.push(element); }
+      elements.push(...Array.from(element.querySelectorAll(this.selector) || []));
+    }
+    return elements
+  }
+
+  processMutations(mutations) {
+    const elements = [];
+    for (let mutation of Array.from(mutations)) {
+      switch (mutation.type) {
+        case "childList":
+          for (let node of Array.from(mutation.addedNodes)) {
+            elements.push(...Array.from(this.findSignificantElements(node) || []));
+          }
+          break
+      }
+    }
+    return this.notify(elements)
+  }
+
+  processInsertion(event) {
+    const elements = this.findSignificantElements(event.target);
+    return this.notify(elements)
+  }
+
+  notify(elements) {
+    if (elements != null ? elements.length : undefined) {
+      return (typeof this.callback === 'function' ? this.callback(elements) : undefined)
+    }
+  }
+}
+
+const SELECTOR = "time[data-local]:not([data-localized])";
+const markAsLocalized = (element) => element.setAttribute("data-localized", "");
+const relative = (time) => new RelativeTime(time);
+
+class Controller {
+  constructor() {
+    this.processElements = this.processElements.bind(this);
+    this.pageObserver = new PageObserver(SELECTOR, this.processElements);
+  }
+
+  start() {
+    if (!this.started) {
+      this.processElements();
+      this.startTimer();
+      this.pageObserver.start();
+      return this.started = true
+    }
+  }
+
+  startTimer() {
+    let interval;
+
+    if (interval = config.timerInterval) {
+      return this.timer != null ? this.timer : (this.timer = setInterval(this.processElements, interval))
+    }
+  }
+
+  processElements(elements) {
+    if (elements == null) {
+      elements = document.querySelectorAll(SELECTOR);
+    }
+
+    for (let element of Array.from(elements)) {
+      this.processElement(element);
+    }
+
+    return elements.length
+  }
+
+  processElement(element) {
+    const datetime = element.getAttribute("datetime");
+    const format = element.getAttribute("data-format");
+    const local = element.getAttribute("data-local");
+
+    if (!element instanceof HTMLTimeElement) return
+    if (!datetime) return
+
+    const getContent = () => {
+      switch (local) {
+        case "time":
+          markAsLocalized(element);
+          return strftime(time, format)
+        case "date":
+          markAsLocalized(element);
+          return relative(time).toDateString()
+        case "time-ago":
+          return relative(time).toString()
+        case "time-or-date":
+          return relative(time).toTimeOrDateString()
+        case "weekday":
+          return relative(time).toWeekdayString()
+        case "weekday-or-date":
+          return relative(time).toWeekdayString() || relative(time).toDateString()
+      }
+    };
+
+    const time = parseDate(datetime);
+    if (isNaN(time)) return
+
+    if (!element.hasAttribute("title")) {
+      const title = strftime(time, getI18nValue("datetime.formats.default"));
+      element.setAttribute("title", title);
+    }
+
+    const content = getContent();
+    element.textContent = content;
+
+    if (!element.hasAttribute("aria-label")) {
+      return element.setAttribute("aria-label", content)
+    }
+  }
+}
+
+let started = false;
+
+const domReady = function() {
+  if (document.attachEvent) {
+    return document.readyState === "complete"
+  } else {
+    return document.readyState !== "loading"
+  }
+};
+
+const nextFrame = function(fn) {
+  let left;
+  return (left = (typeof requestAnimationFrame === 'function' ? requestAnimationFrame(fn) : undefined)) != null ? left : setTimeout(fn, 17)
+};
+
+const startController = function() {
+  const controller = LocalTime.getController();
+  return controller.start()
+};
+
+function start() {
+  if (!started) {
+    started = true;
+
+    if ((typeof MutationObserver !== 'undefined' && MutationObserver !== null) || domReady()) {
+      return startController()
+    } else {
+      return nextFrame(startController)
+    }
+  }
+}
+
+const global = {
+  config,
+  helpers,
+  start,
+
+  run() {
+    return this.getController().processElements()
+  },
+
+  process(...elements) {
+    for (let element of Array.from(elements)) {
+      this.getController().processElement(element);
+    }
+
+    return elements.length
+  },
+
+  getController() {
+    if (this.controller == null) this.controller = new Controller();
+
+    return this.controller
+  }
+};
+
+window.LocalTime = global;
+
+export { global as default };

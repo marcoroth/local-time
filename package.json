@@ -1,17 +1,44 @@
-
 {
-  "name": "local-time",
-  "version": "2.1.0",
+  "name": "@marcoroth/local-time",
+  "version": "3.0.0-beta.1",
   "description": "Local <time> elements",
   "main": "app/assets/javascripts/local-time.js",
+  "module": "app/assets/javascripts/local-time.js",
+  "unpkg": "app/assets/javascripts/local-time.umd.js",
+  "types": "dist/types/index.d.ts",
   "files": [
     "app/assets/javascripts/*.js"
   ],
-  "repository": "basecamp/local_time",
-  "author": "Javan Makhmali <javan@basecamp.com>",
+  "repository": "marcoroth/local-time",
+  "author": "Marco Roth <marco.roth@hey.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/basecamp/local_time/issues"
+  "bugs": "https://github.com/marcoroth/local-time/issues",
+  "homepage": "https://github.com/marcoroth/local-time",
+  "devDependencies": {
+    "@open-wc/testing": "^3.1.6",
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "@rollup/plugin-typescript": "^8.2.5",
+    "@web/test-runner": "^0.14.0",
+    "concurrently": "^7.3.0",
+    "moment": "^2.29.4",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.57.0",
+    "rollup-plugin-filesize": "^9.1.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "sinon": "^14.0.0",
+    "sourcemap": "^0.1.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.2"
   },
-  "homepage": "https://github.com/basecamp/local_time"
+  "scripts": {
+    "start": "cd playground && yarn start",
+    "prebuild": "yarn clean",
+    "build:new": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types && rollup -c",
+    "build": "rollup -c",
+    "watch": "rollup -wc",
+    "dev": "concurrently 'yarn run watch' 'yarn run start'",
+    "clean": "rimraf dist",
+    "prerelease": "yarn build",
+    "test": "web-test-runner test/javascripts/**/*.test.js"
+  }
 }

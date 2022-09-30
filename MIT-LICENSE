@@ -1,4 +1,4 @@
-Copyright 2018 Javan Makhmali, Basecamp
+Copyright 2022 Marco Roth
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -18,3 +18,7 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Copyright for portions of project local-time are held by Javan Makhmali,
+Basecamp 2018 as part of project local-time. All other copyright for
+project @marcoroth/local-time are held by Marco Roth, 2022

@@ -1,3 +1,7 @@
+**3.0.0-beta.1** (September 30, 2022)
+
+* Migrate Codebase to modern JavaScript [Marco Roth]
+
 **2.1.0** (September 4, 2018)
 
 * Add support for non-padded numerical strftime values (`%-d`, `%-m`, etc.) [Paco Benavent]
