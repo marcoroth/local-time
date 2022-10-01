@@ -1,0 +1,2 @@
+app/assets/javascripts/*.js linguist-vendored
+test/**/*.js linguist-vendored
