@@ -1,4 +1,4 @@
-/* LocalTime 3.0.0-beta.1 */
+/* LocalTime 3.0.0-beta.3 */
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :

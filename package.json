@@ -1,6 +1,6 @@
 {
   "name": "@marcoroth/local-time",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "Local <time> elements",
   "main": "app/assets/javascripts/local-time.js",
   "module": "app/assets/javascripts/local-time.js",

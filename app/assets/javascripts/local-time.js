@@ -1,4 +1,4 @@
-/* LocalTime 3.0.0-beta.1 */
+/* LocalTime 3.0.0-beta.3 */
 
 let i18n = {
     en: {
