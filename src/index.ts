@@ -4,11 +4,7 @@ import * as helpers from "./helpers"
 import { Controller } from "./controller"
 import { domReady, nextFrame } from "./utils"
 
-// type LocalTimeConfig = Object
-
 class LocalTime {
-  // declare config: LocalTimeConfig
-  // declare helpers: Object
   declare started: boolean
   declare controller: Controller
 
@@ -60,30 +56,6 @@ class LocalTime {
     return helpers
   }
 }
-
-// const global = {
-//   config,
-//   helpers,
-//   start,
-//
-//   run() {
-//     return this.getController().processElements()
-//   },
-//
-//   process(...elements: Element[]) {
-//     for (let element of Array.from(elements)) {
-//       this.getController().processElement(element)
-//     }
-//
-//     return elements.length
-//   },
-//
-//   getController(): Controller {
-//     if (this.controller == null) this.controller = new Controller()
-//
-//     return this.controller
-//   }
-// }
 
 const localTime = new LocalTime()
 
