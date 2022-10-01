@@ -1,6 +1,6 @@
 import { getI18nValue, translate } from "./i18n"
 
-function strftime(time, formatString) {
+function strftime(time: Date, formatString: string): any {
   const day    = time.getDay()
   const date   = time.getDate()
   const month  = time.getMonth()
@@ -9,7 +9,7 @@ function strftime(time, formatString) {
   const minute = time.getMinutes()
   const second = time.getSeconds()
 
-  return formatString.replace(/%(-?)([%aAbBcdeHIlmMpPSwyYZ])/g, function(match, flag, modifier) {
+  return formatString.replace(/%(-?)([%aAbBcdeHIlmMpPSwyYZ])/g, function(_match, flag: string, modifier: string) {
     switch (modifier) {
       case "%": return "%"
       case "a": return getI18nValue("date.abbrDayNames")[day]
@@ -35,18 +35,19 @@ function strftime(time, formatString) {
   })
 }
 
-function pad(num, flag) {
+function pad(num: number, flag: string) {
   switch (flag) {
     case "-": return num
     default: return (`0${num}`).slice(-2)
   }
 }
 
-function parseTimeZone(time) {
+function parseTimeZone(time: Date) {
   let name
   const string = time.toString()
+
   // Sun Aug 30 2015 10:22:57 GMT-0400 (NAME)
-  if ((name = __guard__(string.match(/\(([\w\s]+)\)$/), x => x[1]))) {
+  if ((name = __guard__(string.match(/\(([\w\s]+)\)$/), (x: any) => x[1]))) {
     if (/\s/.test(name)) {
       // Sun Aug 30 2015 10:22:57 GMT-0400 (Eastern Daylight Time)
       return name.match(/\b(\w)/g).join("")
@@ -54,19 +55,23 @@ function parseTimeZone(time) {
       // Sun Aug 30 2015 10:22:57 GMT-0400 (EDT)
       return name
     }
+
   // Sun Aug 30 10:22:57 EDT 2015
-  } else if ((name = __guard__(string.match(/(\w{3,4})\s\d{4}$/), x1 => x1[1]))) {
+  } else if ((name = __guard__(string.match(/(\w{3,4})\s\d{4}$/), (x1: any) => x1[1]))) {
     return name
+
   // "Sun Aug 30 10:22:57 UTC-0400 2015"
-  } else if ((name = __guard__(string.match(/(UTC[\+\-]\d+)/), x2 => x2[1]))) {
+  } else if ((name = __guard__(string.match(/(UTC[\+\-]\d+)/), (x2: any) => x2[1]))) {
     return name
   } else {
     return ""
   }
 }
 
-function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined
+function __guard__(value: any, transform: Function) {
+  const defined = typeof value !== 'undefined' && value !== null
+
+  if (defined) return transform(value)
 }
 
 export {

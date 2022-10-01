@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve'
 import filesize from 'rollup-plugin-filesize'
-// import typescript from '@rollup/plugin-typescript'
+import typescript from '@rollup/plugin-typescript'
 // import { terser } from 'rollup-plugin-terser'
 
 import { version } from './package.json'
@@ -15,7 +15,7 @@ const banner = `/* LocalTime ${version} */\n`
 
 export default [
   {
-    input: 'src/index.js',
+    input: 'src/index.ts',
     external: [],
     output: [
       {
@@ -33,7 +33,7 @@ export default [
     plugins: [
       resolve(),
       filesize(),
-      // typescript(),
+      typescript(),
       // minify()
     ],
     watch: {
