@@ -1,3 +1,7 @@
+**3.0.0-beta.2** (October 01, 2022)
+
+* Migrate Codebase to TypeScript [Marco Roth]
+
 **3.0.0-beta.1** (September 30, 2022)
 
 * Migrate Codebase to modern JavaScript [Marco Roth]
