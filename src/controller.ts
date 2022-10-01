@@ -5,10 +5,14 @@ import { PageObserver } from "./page_observer"
 import { parseDate, strftime, getI18nValue } from "./helpers"
 
 const SELECTOR = "time[data-local]:not([data-localized])"
-const markAsLocalized = (element) => element.setAttribute("data-localized", "")
-const relative = (time) => new RelativeTime(time)
+const markAsLocalized = (element: Element) => element.setAttribute("data-localized", "")
+const relative = (time: Date) => new RelativeTime(time)
 
 class Controller {
+  declare started: boolean
+  declare pageObserver: PageObserver
+  declare timer: ReturnType<typeof setInterval>
+
   constructor() {
     this.processElements = this.processElements.bind(this)
     this.pageObserver = new PageObserver(SELECTOR, this.processElements)
@@ -23,16 +27,22 @@ class Controller {
     }
   }
 
-  startTimer() {
-    let interval
-
-    if (interval = config.timerInterval) {
-      return this.timer != null ? this.timer : (this.timer = setInterval(this.processElements, interval))
-    }
+  get interval() {
+    return config.timerInterval
   }
 
-  processElements(elements) {
-    if (elements == null) {
+  startTimer() {
+    if (this.timer) return this.timer
+
+    if (this.interval) {
+      this.timer = setInterval(this.processElements, this.interval)
+    }
+
+    return this.timer
+  }
+
+  processElements(elements: Element[] | NodeListOf<Element> = []) {
+    if (elements == null || elements.length == 0) {
       elements = document.querySelectorAll(SELECTOR)
     }
 
@@ -43,13 +53,13 @@ class Controller {
     return elements.length
   }
 
-  processElement(element) {
+  processElement(element: Element) {
     const datetime = element.getAttribute("datetime")
-    const format = element.getAttribute("data-format")
+    const format = element.getAttribute("data-format") || ""
     const local = element.getAttribute("data-local")
 
-    if (!element instanceof HTMLTimeElement) return
     if (!datetime) return
+    if (element.localName !== "time") return
 
     const getContent = () => {
       switch (local) {
@@ -71,7 +81,7 @@ class Controller {
     }
 
     const time = parseDate(datetime)
-    if (isNaN(time)) return
+    if (!time) return
 
     if (!element.hasAttribute("title")) {
       const title = strftime(time, getI18nValue("datetime.formats.default"))

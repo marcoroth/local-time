@@ -1,22 +1,21 @@
-import config from "../config"
-const { i18n } = config
+import config, { Config } from "../config"
+import { i18n } from "../config/i18n"
 
-function getI18nValue(keyPath, param) {
-  if (keyPath == null) { keyPath = "" }
-  if (param == null) { param = { locale: config.locale } }
+type TranlateInterpolations = { [key: string]: string }
 
+function getI18nValue(keyPath: string, param: Config = config): any {
   const { locale } = param
   const value = getValue(i18n[locale], keyPath)
 
   if (value != null) {
     return value
   } else if (locale !== config.defaultLocale) {
-    return getI18nValue(keyPath, {locale: config.defaultLocale})
+    return getI18nValue(keyPath, {  ...config, locale: config.defaultLocale, })
   }
 }
 
-function translate(keyPath, interpolations, options) {
-  if (interpolations == null) { interpolations = {} }
+
+function translate(keyPath: string, interpolations: TranlateInterpolations = {}, options: Config = config) {
   let string = getI18nValue(keyPath, options)
 
   for (let key in interpolations) {
@@ -27,7 +26,7 @@ function translate(keyPath, interpolations, options) {
   return string
 }
 
-function getValue(object, keyPath) {
+function getValue(object: any, keyPath: string) {
   let value = object
 
   for (let key of Array.from(keyPath.split("."))) {

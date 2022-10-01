@@ -33,8 +33,7 @@
   "scripts": {
     "start": "cd playground && yarn start",
     "prebuild": "yarn clean",
-    "build:new": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types && rollup -c",
-    "build": "rollup -c",
+    "build": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types && rollup -c",
     "watch": "rollup -wc",
     "dev": "concurrently 'yarn run watch' 'yarn run start'",
     "clean": "rimraf dist",

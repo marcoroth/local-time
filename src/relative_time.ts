@@ -2,19 +2,23 @@ import { CalendarDate } from "./calendar_date"
 import { strftime, translate, getI18nValue } from "./helpers"
 
 class RelativeTime {
-  constructor(date) {
+  declare date: Date
+  declare calendarDate: CalendarDate
+
+  constructor(date: Date) {
     this.date = date
     this.calendarDate = CalendarDate.fromDate(this.date)
   }
 
   toString() {
-    let date, time
+    let date: string
+    let time: string
 
     if (time = this.toTimeElapsedString()) {
-      return translate("time.elapsed", {time})
+      return translate("time.elapsed", { time })
     } else if (date = this.toWeekdayString()) {
       time = this.toTimeString()
-      return translate("datetime.at", {date, time})
+      return translate("datetime.at", { date, time })
     } else {
       return translate("date.on", {date: this.toDateString()})
     }
@@ -29,7 +33,7 @@ class RelativeTime {
   }
 
   toTimeElapsedString() {
-    let time
+    let time: string
     const ms = new Date().getTime() - this.date.getTime()
     const seconds = Math.round(ms / 1000)
     const minutes = Math.round(seconds / 60)
